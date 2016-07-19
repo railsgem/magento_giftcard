@@ -36,6 +36,82 @@ class Magestore_Giftvoucher_Helper_Data extends Mage_Core_Helper_Data
     protected $_imageReturn;
 
     /**
+     * Retrieve url for adding product to giftcard list with params
+     *
+     * @param Mage_Catalog_Model_Product $item
+     *
+     * @return  string|bool
+     */
+    public function getAddUrl($item)
+    {
+        return $this->getAddUrlWithParams($item);
+    }
+
+
+    
+    /**
+     * Retrieve url for adding product to giftcard list with params
+     *
+     * @param Mage_Catalog_Model_Product $item
+     * @param array $params
+     *
+     * @return  string|bool
+     */
+    public function getAddUrlWithParams($item, array $params = array())
+    {
+        $productId = null;
+        if ($item instanceof Mage_Catalog_Model_Product) {
+            $productId = $item->getEntityId();
+        }
+        if ($item instanceof Mage_Wishlist_Model_Item) {
+            $productId = $item->getProductId();
+        }
+
+        if ($productId) {
+            $params['product'] = $productId;
+            $params[Mage_Core_Model_Url::FORM_KEY] = $this->_getSingletonModel('core/session')->getFormKey();
+            return $this->_getUrlStore($item)->getUrl('giftvoucher/index/addGiftvoucherProduct', $params);
+        }
+
+        return false;
+    }
+    /**
+     * Return model instance
+     *
+     * @param string $className
+     * @param array $arguments
+     * @return Mage_Core_Model_Abstract
+     */
+    protected function _getSingletonModel($className, $arguments = array())
+    {
+        return Mage::getSingleton($className, $arguments);
+    }
+
+    /**
+     * Retrieve Item Store for URL
+     *
+     * @param Mage_Catalog_Model_Product|Mage_Wishlist_Model_Item $item
+     * @return Mage_Core_Model_Store
+     */
+    protected function _getUrlStore($item)
+    {
+        $storeId = null;
+        $product = null;
+        if ($item instanceof Mage_Wishlist_Model_Item) {
+            $product = $item->getProduct();
+        } elseif ($item instanceof Mage_Catalog_Model_Product) {
+            $product = $item;
+        }
+        if ($product) {
+            if ($product->isVisibleInSiteVisibility()) {
+                $storeId = $product->getStoreId();
+            } else if ($product->hasUrlDataObject()) {
+                $storeId = $product->getUrlDataObject()->getStoreId();
+            }
+        }
+        return Mage::app()->getStore($storeId);
+    }
+    /**
      * Get Gift Card general configuration
      *
      * @param string $code
