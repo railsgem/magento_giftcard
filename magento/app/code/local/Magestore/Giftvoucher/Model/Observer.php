@@ -1093,6 +1093,7 @@ class Magestore_Giftvoucher_Model_Observer
                     ->setComments(Mage::helper('giftvoucher')->__('Created for order %s', $order->getIncrementId()))
                     ->setOrderIncrementId($order->getIncrementId())
                     ->setOrderItemId($item->getId())
+                    ->setProductId($item->getProductId())
                     ->setExtraContent(Mage::helper('giftvoucher')->__('Created by customer %s %s', 
                         $order->getData('customer_firstname'), $order->getData('customer_lastname')))
                     ->setIncludeHistory(true);
