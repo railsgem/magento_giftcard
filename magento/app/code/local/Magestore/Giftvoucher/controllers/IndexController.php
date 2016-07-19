@@ -607,4 +607,8 @@ class Magestore_Giftvoucher_IndexController extends Mage_Core_Controller_Front_A
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
 
+    public function addGiftvoucherProductAction()
+    {
+        echo "addGiftvoucherProductAction()";
+    }
 }
