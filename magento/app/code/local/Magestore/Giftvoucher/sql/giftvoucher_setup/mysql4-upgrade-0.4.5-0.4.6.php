@@ -17,6 +17,7 @@
  * @package     Magestore_Giftvoucher
  * @copyright   Copyright (c) 2012 Magestore (http://www.magestore.com/)
  * @license     http://www.magestore.com/license-agreement.html
+ * @PDF_set_info_author("Juno Chen")
  */
 
 $installer = $this;
@@ -27,9 +28,8 @@ $installer->startSetup();
 $installer->run("
 
 ALTER TABLE {$this->getTable('giftvoucher_history')}
-ADD COLUMN `product_id` int(10) AFTER `customer_email`;
+
+ADD COLUMN `product_id` int(10) NOT NULL AFTER `customer_email`;
 
 ");
-
-
 $installer->endSetup();
