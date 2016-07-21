@@ -152,6 +152,22 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
                         </extra_price_per_item>
+                        <special_category_id translate="label">
+                            <label>奶粉，黑糖，蜂蜜等特殊分类ID</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>18</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </special_category_id>
+                        <special_cata_price translate="label">
+                            <label>奶粉，黑糖，蜂蜜等特殊分类运费单价</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>19</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </special_cata_price>
                     </fields>
                 </kiwibuy_sacarrier>
             </groups>

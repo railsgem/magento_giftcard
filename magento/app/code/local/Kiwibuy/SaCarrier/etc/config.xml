@@ -50,6 +50,8 @@
                 <range_two_item_qty_threshold>6</range_two_item_qty_threshold>
                 <range_two_total_qty_threshold>18</range_two_total_qty_threshold>
                 <extra_price_per_item>2</extra_price_per_item>
+                <special_cata_price>9</special_cata_price>
+                <special_category_id>20</special_category_id>
             </kiwibuy_sacarrier>
         </carriers>
     </default>

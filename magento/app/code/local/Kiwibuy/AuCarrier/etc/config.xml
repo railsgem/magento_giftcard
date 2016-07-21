@@ -47,6 +47,8 @@
                 <item_qty_threshold>6</item_qty_threshold>
                 <total_qty_threshold>18</total_qty_threshold>
                 <extra_price_per_item>2</extra_price_per_item>
+                <special_cata_price>9</special_cata_price>
+                <special_category_id>20</special_category_id>
             </kiwibuy_aucarrier>
         </carriers>
     </default>
