@@ -43,6 +43,10 @@
                     in system.xml
                 -->
                 <sallowspecific>0</sallowspecific>
+                <price>8</price>
+                <item_qty_threshold>6</item_qty_threshold>
+                <total_qty_threshold>18</total_qty_threshold>
+                <extra_price_per_item>2</extra_price_per_item>
             </kiwibuy_aucarrier>
         </carriers>
     </default>
