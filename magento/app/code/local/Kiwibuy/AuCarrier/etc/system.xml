@@ -115,7 +115,7 @@
                             <show_in_store>0</show_in_store>
                         </total_qty_threshold>
                         <extra_price_per_item translate="label">
-                            <label>超过产品总数限制后附加费</label>
+                            <label>超过产品总数限制后每件附加费</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>100</sort_order>
                             <show_in_default>1</show_in_default>
