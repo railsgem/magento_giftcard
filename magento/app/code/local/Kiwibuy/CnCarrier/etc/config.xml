@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
     <modules>
-        <Kiwibuy_AuCarrier>
+        <Kiwibuy_CnCarrier>
             <module>0.0.1</module>
-        </Kiwibuy_AuCarrier>
+        </Kiwibuy_CnCarrier>
     </modules>
     <global>
         <models>
-            <kiwibuy_aucarrier>
-                <class>Kiwibuy_AuCarrier_Model</class>
-            </kiwibuy_aucarrier>
+            <kiwibuy_cncarrier>
+                <class>Kiwibuy_CnCarrier_Model</class>
+            </kiwibuy_cncarrier>
         </models>
     </global>
     <!-- Default configuration -->
     <default>
         <carriers>
-            <kiwibuy_aucarrier>
+            <kiwibuy_cncarrier>
                 <active>1</active>
                 <!--
                      This configuration should not be made visible
                      to the administrator, because it specifies
                      the model to be used for this carrier.
                 -->
-                <model>kiwibuy_aucarrier/carrier</model>
+                <model>kiwibuy_cncarrier/carrier</model>
                 <!--
                     The title as referenced in the carrier class
                 -->
-                <title>澳大利亚全境</title>
+                <title>中国大陆地区</title>
                 <!--
                     The sort order specifies the position that
                     this carrier appears relative to the other
@@ -43,7 +43,16 @@
                     in system.xml
                 -->
                 <sallowspecific>0</sallowspecific>
-            </kiwibuy_aucarrier>
+                <range_one_price>10</range_one_price>
+                <range_one_dhl_price>16</range_one_dhl_price>
+                <range_one_item_qty_threshold>6</range_one_item_qty_threshold>
+                <range_one_total_qty_threshold>9</range_one_total_qty_threshold>
+                <range_two_price>15</range_two_price>
+                <range_two_dhl_price>26</range_two_dhl_price>
+                <range_two_item_qty_threshold>6</range_two_item_qty_threshold>
+                <range_two_total_qty_threshold>18</range_two_total_qty_threshold>
+                <extra_price_per_item>2</extra_price_per_item>
+            </kiwibuy_cncarrier>
         </carriers>
     </default>
 </config>

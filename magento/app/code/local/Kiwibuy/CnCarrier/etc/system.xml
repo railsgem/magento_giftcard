@@ -3,8 +3,8 @@
     <sections>
         <carriers translate="label" module="shipping">
             <groups>
-                <kiwibuy_aucarrier translate="label">
-                    <label>澳大利亚全境</label>
+                <kiwibuy_cncarrier translate="label">
+                    <label>中国大陆地区</label>
                     <frontend_type>text</frontend_type>
                     <sort_order>2</sort_order>
                     <show_in_default>1</show_in_default>
@@ -90,40 +90,86 @@
                             <show_in_store>0</show_in_store>
                             <can_be_empty>1</can_be_empty>
                         </specificcountry>
-                        <price translate="label">
-                            <label>运费</label>
+                        <range_one_price translate="label">
+                            <label>区间1：普通快递运费</label>
                             <frontend_type>text</frontend_type>
-                            <sort_order>100</sort_order>
+                            <sort_order>11</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
-                        </price>
-                        <item_qty_threshold translate="label">
-                            <label>单一产品不得超过</label>
+                            <comment>
+                                每一个订单内，单一产品不得超过6个，产品总数不得超过9个，普通快递$10,DHL$16
+                            </comment>
+                        </range_one_price>
+                        <range_one_dhl_price translate="label">
+                            <label>区间1：DHL运费</label>
                             <frontend_type>text</frontend_type>
-                            <sort_order>100</sort_order>
+                            <sort_order>11</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
-                        </item_qty_threshold>
-                        <total_qty_threshold translate="label">
-                            <label>产品总数不得超过</label>
+                        </range_one_dhl_price>
+                        <range_one_item_qty_threshold translate="label">
+                            <label>区间1：单一产品不得超过</label>
                             <frontend_type>text</frontend_type>
-                            <sort_order>100</sort_order>
+                            <sort_order>12</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
-                        </total_qty_threshold>
+                        </range_one_item_qty_threshold>
+                        <range_one_total_qty_threshold translate="label">
+                            <label>区间1：产品总数不得超过</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>13</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </range_one_total_qty_threshold>
+                        <range_two_price translate="label">
+                            <label>区间2：普通快递运费</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>14</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>
+                                每一个订单内，单一产品不得超过6个，产品总数不得超过18个，普通快递$15,DHL$26
+                            </comment>
+                        </range_two_price>
+                        <range_two_dhl_price translate="label">
+                            <label>区间2：DHL运费</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>14</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </range_two_dhl_price>
+                        <range_two_item_qty_threshold translate="label">
+                            <label>区间2：单一产品不得超过</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </range_two_item_qty_threshold>
+                        <range_two_total_qty_threshold translate="label">
+                            <label>区间2：产品总数不得超过</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>16</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </range_two_total_qty_threshold>
                         <extra_price_per_item translate="label">
                             <label>超过产品总数限制后每件附加费</label>
                             <frontend_type>text</frontend_type>
-                            <sort_order>100</sort_order>
+                            <sort_order>17</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
                         </extra_price_per_item>
                     </fields>
-                </kiwibuy_aucarrier>
+                </kiwibuy_cncarrier>
             </groups>
         </carriers>
     </sections>
