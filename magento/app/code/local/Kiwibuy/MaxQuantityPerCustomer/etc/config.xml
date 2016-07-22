@@ -52,4 +52,15 @@
         </acl>
     </adminhtml>
     <!-- ... -->
+        <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Kiwibuy_MaxQuantityPerCustomer after="Mage_Adminhtml">Kiwibuy_MaxQuantityPerCustomer</Kiwibuy_MaxQuantityPerCustomer>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
 </config>
