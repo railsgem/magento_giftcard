@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+     <modules>
+        <Kinex_MaxQuantityAmount>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Kinex_MaxQuantityAmount>
+     </modules>
+</config>
