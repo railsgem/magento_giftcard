@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Kiwibuy_MaxQuantityPerCustomer>
+            <version>0.0.1</version>
+        </Kiwibuy_MaxQuantityPerCustomer>
+    </modules>
+    <frontend>
+        <routers>
+            <maxquantitypercustomer>
+                <use>standard</use>
+                <args>
+                    <module>Kiwibuy_MaxQuantityPerCustomer</module>
+                    <frontName>maxquantitypercustomer</frontName>
+                </args>
+            </maxquantitypercustomer>
+        </routers>  
+    </frontend>
+</config>
