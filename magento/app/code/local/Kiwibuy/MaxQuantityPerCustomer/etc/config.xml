@@ -5,6 +5,20 @@
             <version>0.0.1</version>
         </Kiwibuy_MaxQuantityPerCustomer>
     </modules>
+    <global>
+        <helpers>
+            <maxquantitypercustomer>
+                <class>Kiwibuy_MaxQuantityPerCustomer_Helper</class>
+            </maxquantitypercustomer>
+        </helpers>
+        <models>
+            <!-- ... -->
+            <maxquantitypercustomer>
+                <class>Kiwibuy_MaxQuantityPerCustomer_Model</class>
+            </maxquantitypercustomer>   
+            <!-- ... -->
+        </models>
+    </global>
     <frontend>
         <routers>
             <maxquantitypercustomer>
@@ -16,4 +30,26 @@
             </maxquantitypercustomer>
         </routers>  
     </frontend>
+    <adminhtml>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <orderlimit_options>
+                                            <title>Store Hello World Module Section</title>
+                                        </orderlimit_options>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+    <!-- ... -->
 </config>
