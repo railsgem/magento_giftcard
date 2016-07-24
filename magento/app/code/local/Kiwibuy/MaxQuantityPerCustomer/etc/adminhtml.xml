@@ -30,4 +30,24 @@
             </admin>
         </resources>
     </acl>
+
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <quantityoptioncsonfig translate="title" module="kiwibuy_maxquantitypercustomer">
+                                    <title>Maximum Quasnitity Amount </title>
+                                    </quantityoptioncsonfig>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
 </config> 

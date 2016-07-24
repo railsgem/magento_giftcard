@@ -18,6 +18,15 @@
             </maxquantitypercustomer>   
             <!-- ... -->
         </models>
+
+        <resources>
+            <kiwibuy_maxquantitypercustomer_setup>
+                <setup>
+                    <module>Kiwibuy_MaxQuantityPerCustomer</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+            </kiwibuy_maxquantitypercustomer_setup>
+        </resources>
     </global>
     <frontend>
         <routers>
