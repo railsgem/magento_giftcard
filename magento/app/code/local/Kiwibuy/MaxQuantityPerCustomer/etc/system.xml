@@ -1,12 +1,12 @@
 <config>
     <tabs>
-        <orderlimitconfig translate="label" module="maxquantitypercustomer">
+        <orderlimitconfig translate="label" module="kiwibuy_maxquantitypercustomer">
             <label>Max Quantiy Per Customer</label>
             <sort_order>1</sort_order>
         </orderlimitconfig>
     </tabs> 
     <sections>
-        <orderlimit_options translate="label" module="maxquantitypercustomer">
+        <orderlimit_options translate="label" module="kiwibuy_maxquantitypercustomer">
             <label>Config Options</label>
             <tab>orderlimitconfig</tab>
             <frontend_type>text</frontend_type>

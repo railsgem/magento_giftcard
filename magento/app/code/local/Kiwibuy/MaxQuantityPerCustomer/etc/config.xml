@@ -7,15 +7,15 @@
     </modules>
     <global>
         <helpers>
-            <maxquantitypercustomer>
+            <kiwibuy_maxquantitypercustomer>
                 <class>Kiwibuy_MaxQuantityPerCustomer_Helper</class>
-            </maxquantitypercustomer>
+            </kiwibuy_maxquantitypercustomer>
         </helpers>
         <models>
             <!-- ... -->
-            <maxquantitypercustomer>
+            <kiwibuy_maxquantitypercustomer>
                 <class>Kiwibuy_MaxQuantityPerCustomer_Model</class>
-            </maxquantitypercustomer>   
+            </kiwibuy_maxquantitypercustomer>   
             <!-- ... -->
         </models>
 
@@ -38,6 +38,23 @@
                 </args>
             </maxquantitypercustomer>
         </routers>  
+        <events>
+            <sales_quote_item_qty_set_after>
+                <observers>
+                        <kiwibuy_maxquantitypercustomer>
+                            <class>kiwibuy_maxquantitypercustomer/observer</class>
+                            <method>CheckQuantityAmount</method>
+                        </kiwibuy_maxquantitypercustomer>
+                    </observers>
+            </sales_quote_item_qty_set_after>
+        </events>    
+        <layout>
+            <updates>
+                <kiwibuy_maxquantitypercustomer>
+                    <file>kiwibuy_maxquantitypercustomer.xml</file>
+                </kiwibuy_maxquantitypercustomer>
+            </updates>
+        </layout>
     </frontend>
     <adminhtml>
         <acl>
