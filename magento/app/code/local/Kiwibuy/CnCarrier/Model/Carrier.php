@@ -7,6 +7,8 @@ class Kiwibuy_CnCarrier_Model_Carrier
 
     public $_special_cata_price = 9;
     public $_special_category_id = 20;
+    public $_max_item_times = 1;
+    public $max_exceed_qty = 0;
 
     public function collectRates(Mage_Shipping_Model_Rate_Request $request)
     {
@@ -14,16 +16,35 @@ class Kiwibuy_CnCarrier_Model_Carrier
         $this->_special_category_id = $this->getConfigData('special_category_id');
         $result = Mage::getModel('shipping/rate_result');
         /* @var $result Mage_Shipping_Model_Rate_Result */
-        $result->append($this->_getStandardShippingRate($request));
-        $result->append($this->_getDhlShippingRate($request));
+        if($this->_onlySpecialItems($request, $this->_special_category_id)){
+            $result->append($this->_getStandardShippingRate($request));
+        } else {
+            $result->append($this->_getStandardShippingRate($request));
+            $result->append($this->_getDhlShippingRate($request));
+        }
         return $result;
+    }
+
+    public function _onlySpecialItems($request, $special_category_id)
+    {
+        $onlySpecialItems = true;
+        foreach ($request->getAllItems() as $item) {
+            if ($item->getParentItemId()) {
+                continue;
+            }
+            $product = Mage::getModel('catalog/product')->load($item->getProductId()); 
+            $categoryIds = $product->getCategoryIds();
+            
+            if (in_array($special_category_id, $categoryIds)){
+            } else {
+                $onlySpecialItems = false;
+            }
+        }    
+        return $onlySpecialItems;
     }
 
     protected function _getDhlShippingRate($request)
     {
-        $special_cata_price = $this->_special_cata_price;
-        $special_category_id = $this->_special_category_id;
-
         $range_one_price = $this->getConfigData('range_one_dhl_price');
         $range_one_itemQtythThreshold = $this->getConfigData('range_one_item_qty_threshold');
         $range_one_totalQtythThreshold = $this->getConfigData('range_one_total_qty_threshold');
@@ -32,63 +53,35 @@ class Kiwibuy_CnCarrier_Model_Carrier
         $range_two_totalQtythThreshold = $this->getConfigData('range_two_total_qty_threshold');
         $addPricePerItem = $this->getConfigData('extra_price_per_item');
 
-        $totalQty = 0;
-        $eligibleItemQty = True;
-        $special_cata_total_price = 0;
-        $special_cata_total_qty = 0;
+        $price = $this->getTotalShippingPrice($request,
+                    $range_one_price,
+                    $range_one_itemQtythThreshold,
+                    $range_one_totalQtythThreshold,
+                    $range_two_price,
+                    $range_two_itemQtythThreshold,
+                    $range_two_totalQtythThreshold,
+                    $addPricePerItem
+                    );
 
-        foreach ($request->getAllItems() as $item) {
-            if ($item->getParentItemId()) {
-                continue;
-            }
-            if ($item->getQty() > $range_one_itemQtythThreshold || $item->getQty() > $range_two_itemQtythThreshold){
-                $eligibleItemQty = false;
-            }
-            $product = Mage::getModel('catalog/product')->load($item->getProductId()); 
-            $categoryIds = $product->getCategoryIds();
-            if (in_array($special_category_id, $categoryIds)){
-                $special_cata_total_qty = $special_cata_total_qty + $item->getQty();
-            } else {
-                $totalQty = $totalQty + $item->getQty(); //except special catagory
-            }
-        }    
-        //special catagory
-        $special_cata_total_price = $special_cata_total_qty * $special_cata_price;
+        $rate = Mage::getModel('shipping/rate_result_method');
+        /* @var $rate Mage_Shipping_Model_Rate_Result_Method */
 
-        //except special catagory
-        if ($totalQty <= $range_one_totalQtythThreshold) {
-            $price = $range_one_price;
-        } else if ($totalQty > $range_one_totalQtythThreshold && $totalQty <= $range_two_totalQtythThreshold) {
-            $price = $range_two_price;
-        }
-        if ($totalQty > $range_two_totalQtythThreshold) {
-            $price = $range_two_price + ($totalQty - $range_two_totalQtythThreshold) * $addPricePerItem;
-        }
-        if ($eligibleItemQty) {
-            $price = $price + $special_cata_total_price;
-            $rate = Mage::getModel('shipping/rate_result_method');
-            /* @var $rate Mage_Shipping_Model_Rate_Result_Method */
+        $rate->setCarrier($this->_code);
+        /**
+         * getConfigData(config_key) returns the configuration value for the
+         * carriers/[carrier_code]/[config_key]
+         */
+        $rate->setCarrierTitle($this->getConfigData('title'));
 
-            $rate->setCarrier($this->_code);
-            /**
-             * getConfigData(config_key) returns the configuration value for the
-             * carriers/[carrier_code]/[config_key]
-             */
-            $rate->setCarrierTitle($this->getConfigData('title'));
+        $rate->setMethod('dhl');
+        $rate->setMethodTitle('DHL');
 
-            $rate->setMethod('dhl');
-            $rate->setMethodTitle('DHL');
-
-            $rate->setPrice($price);
-            $rate->setCost(0);
-        }
-
+        $rate->setPrice($price);
+        $rate->setCost(0);
         return $rate;
     }
     protected function _getStandardShippingRate($request)
     {
-        $special_cata_price = $this->_special_cata_price;
-        $special_category_id = $this->_special_category_id;
         
         $range_one_price = $this->getConfigData('range_one_price');
         $range_one_itemQtythThreshold = $this->getConfigData('range_one_item_qty_threshold');
@@ -98,6 +91,49 @@ class Kiwibuy_CnCarrier_Model_Carrier
         $range_two_totalQtythThreshold = $this->getConfigData('range_two_total_qty_threshold');
         $addPricePerItem = $this->getConfigData('extra_price_per_item');
 
+        $price = $this->getTotalShippingPrice($request,
+                    $range_one_price,
+                    $range_one_itemQtythThreshold,
+                    $range_one_totalQtythThreshold,
+                    $range_two_price,
+                    $range_two_itemQtythThreshold,
+                    $range_two_totalQtythThreshold,
+                    $addPricePerItem
+                    );
+
+        $rate = Mage::getModel('shipping/rate_result_method');
+        /* @var $rate Mage_Shipping_Model_Rate_Result_Method */
+
+        $rate->setCarrier($this->_code);
+        /**
+         * getConfigData(config_key) returns the configuration value for the
+         * carriers/[carrier_code]/[config_key]
+         */
+        $rate->setCarrierTitle($this->getConfigData('title'));
+
+        $rate->setMethod('standard');
+        $rate->setMethodTitle('普通快递');
+
+        $rate->setPrice($price);
+        $rate->setCost(0);
+        return $rate;
+    }
+    public function getTotalShippingPrice($request,
+                    $range_one_price,
+                    $range_one_itemQtythThreshold,
+                    $range_one_totalQtythThreshold,
+                    $range_two_price,
+                    $range_two_itemQtythThreshold,
+                    $range_two_totalQtythThreshold,
+                    $addPricePerItem)
+    {
+        $qty_exceed_part = 0;
+        $special_cata_price = $this->_special_cata_price;
+        $special_category_id = $this->_special_category_id;
+        $price = 0;
+        $totalQty = 0;
+        $max_item_times = $this->_max_item_times;
+
         $totalQty = 0;
         $eligibleItemQty = True;
         $special_cata_total_price = 0;
@@ -107,49 +143,74 @@ class Kiwibuy_CnCarrier_Model_Carrier
             if ($item->getParentItemId()) {
                 continue;
             }
-            if ($item->getQty() > $range_one_itemQtythThreshold || $item->getQty() > $range_two_itemQtythThreshold){
-                $eligibleItemQty = false;
-            }
             $product = Mage::getModel('catalog/product')->load($item->getProductId()); 
             $categoryIds = $product->getCategoryIds();
+            if ($item->getQty() > $range_one_itemQtythThreshold || $item->getQty() > $range_two_itemQtythThreshold){
+                $eligibleItemQty = false;
+                if (in_array($special_category_id, $categoryIds)){
+                } else {
+                    $qty_exceed_part = $qty_exceed_part + ($item->getQty() - $range_one_itemQtythThreshold);
+                }
+                if ($item->getQty() > $range_one_itemQtythThreshold ) {
+                    if ($max_item_times < ceil($item->getQty() / $range_one_itemQtythThreshold)){
+                        $max_item_times = ceil($item->getQty() / $range_one_itemQtythThreshold);
+                    }
+                } else {
+                    if ($max_item_times < ceil($item->getQty() / $range_two_itemQtythThreshold)) {
+                        $max_item_times = ceil($item->getQty() / $range_two_itemQtythThreshold);
+                    }
+                }
+            }
             if (in_array($special_category_id, $categoryIds)){
                 $special_cata_total_qty = $special_cata_total_qty + $item->getQty();
             } else {
                 $totalQty = $totalQty + $item->getQty(); //except special catagory
             }
         }    
-        if ($totalQty <= $range_one_totalQtythThreshold) {
-            $price = $range_one_price;
-        } else if ($totalQty > $range_one_totalQtythThreshold && $totalQty <= $range_two_totalQtythThreshold) {
-            $price = $range_two_price;
-        }
-        if ($totalQty > $range_two_totalQtythThreshold) {
-            $price = $range_two_price + ($totalQty - $range_two_totalQtythThreshold) * $addPricePerItem;
-        }
         //special catagory
         $special_cata_total_price = $special_cata_total_qty * $special_cata_price;
 
-        //except special catagory
-        if ($eligibleItemQty) {
-            $price = $price + $special_cata_total_price;
-            $rate = Mage::getModel('shipping/rate_result_method');
-            /* @var $rate Mage_Shipping_Model_Rate_Result_Method */
+        $allItems = array();
+        foreach ($request->getAllItems() as $item) {
+            if ($item->getParentItemId()) {
+                continue;
+            }
+            $product = Mage::getModel('catalog/product')->load($item->getProductId()); 
+            $categoryIds = $product->getCategoryIds();
 
-            $rate->setCarrier($this->_code);
-            /**
-             * getConfigData(config_key) returns the configuration value for the
-             * carriers/[carrier_code]/[config_key]
-             */
-            $rate->setCarrierTitle($this->getConfigData('title'));
-
-            $rate->setMethod('standard');
-            $rate->setMethodTitle('普通快递');
-
-            $rate->setPrice($price);
-            $rate->setCost(0);
+            if (in_array($special_category_id, $categoryIds)){
+                continue;
+            } else {
+                $allItems[] = (array('product_id' => $item->getProductId(),
+                                    'product_qty' => $item->getQty()));
+            }
+        }    
+        if ($totalQty) {
+            while ($max_item_times > 0) {
+                $i = 0;
+                $totalQty = 0;
+                foreach ($allItems as $item) {
+                    if ($allItems[$i]['product_qty']>= $range_one_itemQtythThreshold){
+                        $allItems[$i]['product_qty'] = $allItems[$i]['product_qty'] - $range_one_itemQtythThreshold;
+                        $totalQty = $totalQty + $range_one_itemQtythThreshold;
+                    } else {
+                        $totalQty = $totalQty + $allItems[$i]['product_qty'];
+                        $allItems[$i]['product_qty'] = 0;
+                    }
+                    $i++;
+                }
+                if ($totalQty <= $range_one_totalQtythThreshold) {
+                    $price = $price + $range_one_price;
+                } else if ($totalQty > $range_one_totalQtythThreshold && $totalQty <= $range_two_totalQtythThreshold) {
+                    $price = $price + $range_two_price;
+                } else if ($totalQty > $range_two_totalQtythThreshold) {
+                    $price = $price + $range_two_price + ($totalQty - $range_two_totalQtythThreshold) * $addPricePerItem;
+                }
+                $max_item_times--;
+            }
         }
-
-        return $rate;
+        $price = $price + $special_cata_total_price;
+        return $price;
     }
 
     public function getAllowedMethods()
