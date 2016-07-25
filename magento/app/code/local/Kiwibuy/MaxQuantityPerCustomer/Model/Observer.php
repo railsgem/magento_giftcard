@@ -11,8 +11,7 @@ class Kiwibuy_MaxQuantityPerCustomer_Model_Observer
 
     public function CheckQuantityAmount(Varien_Event_Observer $observer)
     {
-        
-         $configMsg=$this->_helper->getMaxQuantityMsg();
+      $configMsg=$this->_helper->getMaxQuantityMsg();
 
          if (!$this->_helper->isModuleEnabled()) {
             return;
@@ -25,11 +24,10 @@ class Kiwibuy_MaxQuantityPerCustomer_Model_Observer
          $productObj = Mage::getModel('catalog/product')->load($item->getProduct()->getId());
          
           
-         $productMaxQuantityEnable = $productObj->getAttributeText('maximum_quantity_enable');
+         $productMaxQuantityEnable = $productObj->getAttributeText('maximum_qty_per_cst_enable');
 
-
-         $productMaxQuantity = (int)$productObj->getMaximumQuantity();
-         $productMaxQuantityMsg = $productObj->getMaximumQuantityMessage();
+         $productMaxQuantity = (int)$productObj->getMaximumQtyPerCst();
+         $productMaxQuantityMsg = $productObj->getMaximumQtyPerCstMessage();
          $Message=$productMaxQuantityMsg;
 
           if(!$productMaxQuantityMsg){
@@ -41,7 +39,6 @@ class Kiwibuy_MaxQuantityPerCustomer_Model_Observer
                return;    
 
            }
-        
 
          if($UserEnterQuantity > $productMaxQuantity){
            
@@ -54,9 +51,6 @@ class Kiwibuy_MaxQuantityPerCustomer_Model_Observer
 
 
          }  
-
-
-           
     }
 
 }

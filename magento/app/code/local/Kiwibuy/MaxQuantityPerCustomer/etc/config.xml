@@ -29,7 +29,7 @@
         </resources>
     </global>
     <frontend>
-        <routers>
+        <!-- <routers>
             <maxquantitypercustomer>
                 <use>standard</use>
                 <args>
@@ -37,7 +37,7 @@
                     <frontName>maxquantitypercustomer</frontName>
                 </args>
             </maxquantitypercustomer>
-        </routers>  
+        </routers>   -->
         <events>
             <sales_quote_item_qty_set_after>
                 <observers>
