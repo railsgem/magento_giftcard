@@ -39,14 +39,14 @@
             </maxquantitypercustomer>
         </routers>   -->
         <events>
-            <sales_quote_item_qty_set_after>
+            <checkout_onepage_controller_success_action>
                 <observers>
                         <kiwibuy_maxquantitypercustomer>
                             <class>kiwibuy_maxquantitypercustomer/observer</class>
                             <method>CheckQuantityAmount</method>
                         </kiwibuy_maxquantitypercustomer>
                     </observers>
-            </sales_quote_item_qty_set_after>
+            </checkout_onepage_controller_success_action>
         </events>    
         <layout>
             <updates>

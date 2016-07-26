@@ -11,46 +11,58 @@ class Kiwibuy_MaxQuantityPerCustomer_Model_Observer
 
     public function CheckQuantityAmount(Varien_Event_Observer $observer)
     {
-      $configMsg=$this->_helper->getMaxQuantityMsg();
+      $Message = "asdfasdfadsfdas";
+                  $return_html = '<div id="checkout_dialog_text">抱歉！您选择的部分商品不能寄往您选择的地址！</div><div id="checkout_dialog_button"><a href="/shipment#policy" target="_blank">去查看特殊邮寄规则</a></div>';
 
-         if (!$this->_helper->isModuleEnabled()) {
-            return;
-        }  
 
-         $item = $observer->getItem();
-         $UserEnterQuantity=$item->getQty();
+            echo '{"error":"1","message":'.json_encode($return_html).'}';
+           // Mage::getSingleton('checkout/session')->addError(
+           //      $this->_helper->__($Message));
+
+           // // Mage::app()->getFrontController()->getResponse()->setRedirect(Mage::getUrl('checkout/cart'));
+           //  Mage::app()->getResponse()->sendResponse();
+            // exit;
+
+      // $configMsg=$this->_helper->getMaxQuantityMsg();
+
+      //    if (!$this->_helper->isModuleEnabled()) {
+      //       return;
+      //   }  
+
+      //    $item = $observer->getItem();
+      //    $UserEnterQuantity=$item->getQty();
          
            
-         $productObj = Mage::getModel('catalog/product')->load($item->getProduct()->getId());
+      //    $productObj = Mage::getModel('catalog/product')->load($item->getProduct()->getId());
          
           
-         $productMaxQuantityEnable = $productObj->getAttributeText('maximum_qty_per_cst_enable');
+      //    $productMaxQuantityEnable = $productObj->getAttributeText('maximum_qty_per_cst_enable');
 
-         $productMaxQuantity = (int)$productObj->getMaximumQtyPerCst();
-         $productMaxQuantityMsg = $productObj->getMaximumQtyPerCstMessage();
-         $Message=$productMaxQuantityMsg;
+      //    $productMaxQuantity = (int)$productObj->getMaximumQtyPerCst();
+      //    $productMaxQuantityMsg = $productObj->getMaximumQtyPerCstMessage();
+      //    $Message=$productMaxQuantityMsg;
 
-          if(!$productMaxQuantityMsg){
-             $Message=$configMsg;                
+      //     if(!$productMaxQuantityMsg){
+      //        $Message=$configMsg;                
 
-          }
+      //     }
 
-           if($productMaxQuantityEnable=='No'){
-               return;    
+      //      if($productMaxQuantityEnable=='No'){
+      //          return;    
 
-           }
+      //      }
 
-         if($UserEnterQuantity > $productMaxQuantity){
+      //    if($UserEnterQuantity > $productMaxQuantity){
            
-           Mage::getSingleton('checkout/session')->addError(
-                $this->_helper->__($Message));
+      //      Mage::getSingleton('checkout/session')->addError(
+      //           $this->_helper->__($Message));
 
-           Mage::app()->getFrontController()->getResponse()->setRedirect(Mage::getUrl('checkout/cart'));
-            Mage::app()->getResponse()->sendResponse();
-            exit;
+      //      Mage::app()->getFrontController()->getResponse()->setRedirect(Mage::getUrl('checkout/cart'));
+      //       Mage::app()->getResponse()->sendResponse();
+      //       exit;
 
 
-         }  
+      //    }  
     }
 
 }
