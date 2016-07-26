@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Kinex_MaxQuantityAmount>
+            <version>1.0.0</version>
+        </Kinex_MaxQuantityAmount>
+    </modules>
+    <global>
+        <blocks>
+            <kinex_maxquantityamount>
+                <class>Kinex_MaxQuantityAmount_Block</class>
+            </kinex_maxquantityamount>
+            <kinex_maxquantityamount_adminhtml>
+                <class>Kinex_MaxQuantityAmount_Block_Adminhtml</class>
+            </kinex_maxquantityamount_adminhtml>
+        </blocks>
+        <models>
+            <kinex_maxquantityamount>
+                <class>Kinex_MaxQuantityAmount_Model</class>
+            </kinex_maxquantityamount>
+        </models>
+        <helpers>
+            <kinex_maxquantityamount>
+                <class>Kinex_MaxQuantityAmount_Helper</class>
+            </kinex_maxquantityamount>
+        </helpers>
+      
+        <resources>
+            <kinex_maxquantityamount_setup>
+                <setup>
+                    <module>Kinex_MaxQuantityAmount</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+            </kinex_maxquantityamount_setup>
+        </resources>
+        
+    </global>
+    <frontend>
+        <!--
+        <routers>
+           <kinex_maxquantityamount>
+               <use>standard</use>
+               <args>
+                   <module>Kinex_MaxQuantityAmount</module>
+                   <frontName>test</frontName>
+               </args>
+           </kinex_maxquantityamount>
+        </routers>
+        -->
+
+        <events>
+        <sales_quote_item_qty_set_after>
+            <observers>
+                    <kinex_maxquantityamount>
+                        <class>kinex_maxquantityamount/observer</class>
+                        <method>CheckQuantityAmount</method>
+                    </kinex_maxquantityamount>
+                </observers>
+            </sales_quote_item_qty_set_after>
+            </events>    
+        <layout>
+            <updates>
+                <kinex_maxquantityamount>
+                    <file>kinex_maxquantityamount.xml</file>
+                </kinex_maxquantityamount>
+            </updates>
+        </layout>
+    </frontend>
+  
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Kinex_MaxQuantityAmount before="Mage_Adminhtml">Kinex_MaxQuantityAmount_Adminhtml</Kinex_MaxQuantityAmount>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+   
+   
+</config>

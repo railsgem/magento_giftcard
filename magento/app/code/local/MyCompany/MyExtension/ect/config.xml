@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <MyCompany_MyExtension>
+            <module>0.0.1</module>
+        </MyCompany_MyExtension>
+    </modules>
+    <global>
+        <models>
+            <mycompany_myextension>
+                <class>MyCompany_MyExtension_Model</class>
+            </mycompany_myextension>
+        </models>
+    </global>
+    <frontend>
+		<events>
+            <sales_order_save_after>
+                <observers>
+                    <customer_first_order>
+                        <class>mycompany_myextension/observer</class>
+                        <method>handleCustomerFirstOrder</method>
+                    </customer_first_order>
+                </observers>
+            </sales_order_save_after>			
+		</events>
+	</frontend>
+</config>

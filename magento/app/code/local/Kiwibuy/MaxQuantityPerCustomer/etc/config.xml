@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Kiwibuy_MaxQuantityPerCustomer>
+            <version>0.0.1</version>
+        </Kiwibuy_MaxQuantityPerCustomer>
+    </modules>
+    <global>
+        <helpers>
+            <kiwibuy_maxquantitypercustomer>
+                <class>Kiwibuy_MaxQuantityPerCustomer_Helper</class>
+            </kiwibuy_maxquantitypercustomer>
+        </helpers>
+        <models>
+            <!-- ... -->
+            <kiwibuy_maxquantitypercustomer>
+                <class>Kiwibuy_MaxQuantityPerCustomer_Model</class>
+            </kiwibuy_maxquantitypercustomer>   
+            <!-- ... -->
+        </models>
+
+        <resources>
+            <kiwibuy_maxquantitypercustomer_setup>
+                <setup>
+                    <module>Kiwibuy_MaxQuantityPerCustomer</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+            </kiwibuy_maxquantitypercustomer_setup>
+        </resources>
+    </global>
+    <frontend>
+        <!-- <routers>
+            <maxquantitypercustomer>
+                <use>standard</use>
+                <args>
+                    <module>Kiwibuy_MaxQuantityPerCustomer</module>
+                    <frontName>maxquantitypercustomer</frontName>
+                </args>
+            </maxquantitypercustomer>
+        </routers>   -->
+        <events>
+            <checkout_onepage_controller_success_action>
+                <observers>
+                        <kiwibuy_maxquantitypercustomer>
+                            <class>kiwibuy_maxquantitypercustomer/observer</class>
+                            <method>CheckQuantityAmount</method>
+                        </kiwibuy_maxquantitypercustomer>
+                    </observers>
+            </checkout_onepage_controller_success_action>
+        </events>    
+        <layout>
+            <updates>
+                <kiwibuy_maxquantitypercustomer>
+                    <file>kiwibuy_maxquantitypercustomer.xml</file>
+                </kiwibuy_maxquantitypercustomer>
+            </updates>
+        </layout>
+    </frontend>
+    <adminhtml>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <orderlimit_options>
+                                            <title>Store Hello World Module Section</title>
+                                        </orderlimit_options>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+    <!-- ... -->
+        <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Kiwibuy_MaxQuantityPerCustomer after="Mage_Adminhtml">Kiwibuy_MaxQuantityPerCustomer</Kiwibuy_MaxQuantityPerCustomer>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+</config>
