@@ -31,6 +31,7 @@
  * @see Mage_Review_Block_Product_View
  */
 ?>
+<!-- this view is used for gift card -->
 <?php $_helper = $this->helper('catalog/output'); ?>
 <?php $_product = $this->getProduct(); ?>
 <script type="text/javascript">
@@ -80,7 +81,7 @@
 
 
 
-                <?php echo $this->getChildHtml('other');?>
+                <?php //echo $this->getChildHtml('other');?>
 
                 <?php if ($_product->isSaleable() && $this->hasOptions()):?>
                     <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
@@ -88,7 +89,7 @@
 
             </div>
 
-            <div class="add-to-cart-wrapper">
+           <!--  <div class="add-to-cart-wrapper">
                 <?php echo $this->getChildHtml('product_type_data') ?>
                 <?php echo $this->getChildHtml('extrahint') ?>
 
@@ -110,7 +111,7 @@
                         <?php echo $this->getChildHtml('sharing') ?>
                     </div>
                 <?php endif; ?>
-            </div>
+            </div> -->
 
             <?php echo $this->getChildHtml('related_products') ?>
 

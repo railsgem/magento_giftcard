@@ -37,9 +37,9 @@ class Magestore_Giftvoucher_Block_Product_View extends Mage_Catalog_Block_Produc
 
         $media = $this->getLayout()->getBlock('product.info.media');
         $_product = $this->getProduct();
-        if ($media && $_product->getTypeId() == 'giftvoucher') {
-            $media->setTemplate('giftvoucher/product/media.phtml');
-        }
+        // if ($media && $_product->getTypeId() == 'giftvoucher') {
+        //     $media->setTemplate('giftvoucher/product/media.phtml');
+        // }
     }
 
     /**

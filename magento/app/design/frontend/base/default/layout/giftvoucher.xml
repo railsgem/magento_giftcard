@@ -76,7 +76,7 @@
     </PRODUCT_TYPE_simple>
 
     <!-- Gift Voucher Product Type -->
-    <PRODUCT_TYPE_giftvoucher translate="label" module="giftvoucher">
+<!--     <PRODUCT_TYPE_giftvoucher translate="label" module="giftvoucher">
         <label>Catalog Product View (Gift Card)</label>
         <reference name="product.info">
             <block type="giftvoucher/product_view" name="product.info.giftvoucher" as="product_type_data" template="giftvoucher/product/view.phtml" >
@@ -96,7 +96,7 @@
                 <limit>4</limit>
             </action>
         </reference>
-    </PRODUCT_TYPE_giftvoucher>
+    </PRODUCT_TYPE_giftvoucher> -->
 
     <!-- Gift Voucher Product Price -->
 
