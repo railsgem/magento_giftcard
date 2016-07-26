@@ -35,6 +35,7 @@
 <?php
     $_productCollection=$this->getLoadedProductCollection();
     $_helper = $this->helper('catalog/output');
+    $collectedGiftvouchers = Mage::helper('giftvoucher')->getCustomerCollectedGiftProducts();
 ?>
 <?php if(!$_productCollection->count()): ?>
 <p class="note-msg"><?php echo $this->__('There are no products matching the selection.') ?></p>
@@ -149,7 +150,11 @@
                     <?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
                     <?php endif; ?>
                     <div class="actions">
+                        <?php if (!in_array($_product->getId(), $collectedGiftvouchers)): ?>
                         <a href="<?php echo $this->helper('giftvoucher')->getAddUrl($_product) ?>" class="button"><?php echo $this->__('领取优惠券') ?></a>
+                        <?php else: ?>
+                        <a href="" class="button"><?php echo $this->__('已领取') ?></a>
+                        <?php endif; ?>
                         <?php if(!$_product->canConfigure() && $_product->isSaleable()): ?>
                             <button type="button" title="<?php echo $this->quoteEscape($this->__('Add to Cart')) ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button>
                         <?php elseif($_product->getStockItem() && $_product->getStockItem()->getIsInStock()): ?>

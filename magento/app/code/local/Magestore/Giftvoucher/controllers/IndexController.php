@@ -609,11 +609,8 @@ class Magestore_Giftvoucher_IndexController extends Mage_Core_Controller_Front_A
 
     public function addGiftvoucherProductAction()
     {
-        echo "addGiftvoucherProductAction()";
         $productId = $this->getRequest()->getParam('product');
         $product = Mage::getModel('catalog/product')->load($productId);
-        // var_dump($product->getPrice());
-// $this->_redirectReferer();
         $url = Mage::getSingleton('core/session')->getLastUrl();
         $history = Mage::getModel('giftvoucher/history')->_addGiftVoucherForCollection($product);
     }

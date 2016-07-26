@@ -701,4 +701,20 @@ class Magestore_Giftvoucher_Helper_Data extends Mage_Core_Helper_Data
         return 0;
     }
 
+    /**
+     * Return gift product ID lists by customer id
+     * @author Juno Chen
+     */
+    public function getCustomerCollectedGiftProducts()
+    {
+        $customerId = Mage::getSingleton('customer/session')->getCustomer()->getId();
+        $products = Mage::getModel('giftvoucher/history')->getCollection()
+            ->addFieldToFilter('customer_id', $customerId)
+            ;
+        $prductIds = array();
+        foreach($products as $product) {
+            $prductIds[] = $product->getProductId();
+        }
+        return $prductIds;
+    }
 }
