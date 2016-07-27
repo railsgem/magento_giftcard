@@ -703,6 +703,9 @@ class Magestore_Giftvoucher_Helper_Data extends Mage_Core_Helper_Data
 
     /**
      * Return gift product ID lists by customer id
+     * 
+     * @param 
+     * @return array
      * @author Juno Chen
      */
     public function getCustomerCollectedGiftProducts()
@@ -716,5 +719,53 @@ class Magestore_Giftvoucher_Helper_Data extends Mage_Core_Helper_Data
             $prductIds[] = $product->getProductId();
         }
         return $prductIds;
+    }
+
+    /**
+     * Return gift product name by product id
+     * 
+     * @param $productId
+     * @return string
+     * @author Juno Chen
+     */
+    public function getGiftProductNameById($productId)
+    {
+        return Mage::getModel('catalog/product')->load($productId)->getName();
+    }
+
+    /**
+     * Return gift product url by product id
+     * 
+     * @param $productId
+     * @return string url
+     * @author Juno Chen
+     */
+    public function getGiftProductUrlById($productId)
+    {
+        return Mage::getModel('catalog/product')->load($productId)->getProductUrl();
+    }
+
+    /**
+     * Return gift product ShortDescription by product id
+     * 
+     * @param $productId
+     * @return string ShortDescription
+     * @author Juno Chen
+     */
+    public function getGiftProductShortDescriptionById($productId)
+    {
+        return Mage::getModel('catalog/product')->load($productId)->getShortDescription();
+    }
+    
+    /**
+     * Return gift product Description by product id
+     * 
+     * @param $productId
+     * @return string Description
+     * @author Juno Chen
+     */
+    public function getGiftProductDescriptionById($productId)
+    {
+        return Mage::getModel('catalog/product')->load($productId)->getDescription();
     }
 }

@@ -43,6 +43,7 @@ class Magestore_Giftvoucher_Block_Giftvoucherlist extends Mage_Core_Block_Templa
                 array('voucher_table' => $voucherTable), 'main_table.voucher_id = voucher_table.giftvoucher_id', array(
                 'recipient_name',
                 'gift_code',
+                'product_id' => 'voucher_table.product_id',
                 'balance',
                 'currency',
                 'status',
@@ -75,27 +76,58 @@ class Magestore_Giftvoucher_Block_Giftvoucherlist extends Mage_Core_Block_Templa
         $grid = $this->getLayout()->createBlock('giftvoucher/grid', 'giftvoucher_grid');
         // prepare column
 
-        $grid->addColumn('gift_code', array(
-            'header' => $this->__('Gift Card Code'),
-            'index' => 'gift_code',
+        // $grid->addColumn('gift_code', array(
+        //     'header' => $this->__('Gift Card Code'),
+        //     'index' => 'gift_code',
+        //     'format' => 'medium',
+        //     'align' => 'left',
+        //     'width' => '80px',
+        //     'render' => 'getCodeTxt',
+        //     'searchable' => true,
+        // ));
+
+        $grid->addColumn('product_name', array(
+            'header' => $this->__('优惠券名称'),
+            'index' => 'product_name',
             'format' => 'medium',
             'align' => 'left',
-            'width' => '80px',
-            'render' => 'getCodeTxt',
+            'width' => '160px',
+            'render' => 'getGiftProductName',
+            'searchable' => true,
+        ));
+
+        $grid->addColumn('product_short_description', array(
+            'header' => $this->__('活动范围'),
+            'index' => 'product_short_description',
+            'format' => 'medium',
+            'align' => 'left',
+            'width' => '160px',
+            'render' => 'getGiftProductShortDescription',
+            'searchable' => true,
+        ));
+
+        $grid->addColumn('product_description', array(
+            'header' => $this->__('活动规则'),
+            'index' => 'product_description',
+            'format' => 'medium',
+            'align' => 'left',
+            'width' => '160px',
+            'render' => 'getGiftProductDescription',
             'searchable' => true,
         ));
 
         $grid->addColumn('balance', array(
-            'header' => $this->__('Balance'),
+            'header' => $this->__('金额'),
             'align' => 'left',
             'type' => 'price',
             'index' => 'balance',
             'render' => 'getBalanceFormat',
             'searchable' => true,
         ));
+
         $statuses = Mage::getSingleton('giftvoucher/status')->getOptionArray();
         $grid->addColumn('status', array(
-            'header' => $this->__('Status'),
+            'header' => $this->__('状态'),
             'align' => 'left',
             'index' => 'status',
             'type' => 'options',
@@ -105,7 +137,7 @@ class Magestore_Giftvoucher_Block_Giftvoucherlist extends Mage_Core_Block_Templa
         ));
 
         $grid->addColumn('added_date', array(
-            'header' => $this->__('Added Date'),
+            'header' => $this->__('领取时间'),
             'index' => 'added_date',
             'type' => 'date',
             'format' => 'medium',
@@ -113,7 +145,7 @@ class Magestore_Giftvoucher_Block_Giftvoucherlist extends Mage_Core_Block_Templa
             'searchable' => true,
         ));
         $grid->addColumn('expired_at', array(
-            'header' => $this->__('Expired Date'),
+            'header' => $this->__('失效时间'),
             'index' => 'expired_at',
             'type' => 'date',
             'format' => 'medium',
@@ -122,17 +154,77 @@ class Magestore_Giftvoucher_Block_Giftvoucherlist extends Mage_Core_Block_Templa
         ));
 
         $grid->addColumn('action', array(
-            'header' => $this->__('Action'),
+            'header' => $this->__('操作'),
             'align' => 'left',
             'type' => 'action',
             'width' => '300px',
-            'render' => 'getActions',
+            'render' => 'getGiftProductUrl',
         ));
 
         $this->setChild('giftvoucher_grid', $grid);
         return $this;
     }
 
+    /**
+     * Get Gift Product Name by Product Id
+     *
+     * @param mixed $row
+     * @return string
+     * @author Juno Chen
+     */
+    public function getGiftProductName($row)
+    {
+        $productId = $row->getProductId();
+        $productName = Mage::helper('giftvoucher')->getGiftProductNameById($productId);
+        return $productName;
+    }
+
+    /**
+     * Get Gift Product Url by Product Id
+     *
+     * @param mixed $row
+     * @return string
+     * @author Juno Chen
+     */
+    public function getGiftProductUrl($row)
+    {
+        $productId = $row->getProductId();
+        $url = Mage::helper('giftvoucher')->getGiftProductUrlById($productId);
+
+        $action = '<a href="' . $url . ' " target="_blank" >' . 
+            $this->__('去使用') . '</a>';
+
+        return $action;
+    }
+
+    /**
+     * Get Gift Product ShortDescription by Product Id
+     *
+     * @param mixed $row
+     * @return string
+     * @author Juno Chen
+     */
+    public function getGiftProductShortDescription($row)
+    {
+        $productId = $row->getProductId();
+        $shortDescription = Mage::helper('giftvoucher')->getGiftProductShortDescriptionById($productId);
+        return $shortDescription;
+    }
+    
+    /**
+     * Get Gift Product Description by Product Id
+     *
+     * @param mixed $row
+     * @return string
+     * @author Juno Chen
+     */
+    public function getGiftProductDescription($row)
+    {
+        $productId = $row->getProductId();
+        $description = Mage::helper('giftvoucher')->getGiftProductDescriptionById($productId);
+        return $description;
+    }
+    
     /**
      * Get row number
      *

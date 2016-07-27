@@ -141,11 +141,11 @@ class Magestore_Giftvoucher_Model_History extends Mage_Core_Model_Abstract
             //  die(now(true));
             $giftVoucher->save();
             $timeSite = date("Y-m-d H:i:s", Mage::getModel('core/date')->timestamp(time()));
-                Mage::getModel('giftvoucher/customervoucher')
-                    ->setCustomerId($customerId)
-                    ->setVoucherId($giftVoucher->getId())
-                    ->setAddedDate($timeSite)
-                    ->save();
+            Mage::getModel('giftvoucher/customervoucher')
+                ->setCustomerId($customerId)
+                ->setVoucherId($giftVoucher->getId())
+                ->setAddedDate($timeSite)
+                ->save();
             Mage::getSingleton('core/session')->addSuccess('优惠券领取成功');
         } catch (Exception $e) {
             Mage::getSingleton('core/session')->addError('优惠券领取失败');
